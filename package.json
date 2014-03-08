@@ -12,9 +12,15 @@
     "astro": "main.js"
   },
   "dependencies": {
+    "colors": "~0.6.2",
+    "ect": "~0.5.6",
+    "express": "~3.5.0",
+    "faye": "~1.0.1",
+    "nomnom": "~1.6.2",
+    "open": "0.0.4",
+    "sudo": "~1.0.3"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/schmich/astro.git"
