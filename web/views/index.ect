@@ -1,0 +1,20 @@
+<% extend 'layout.ect' %>
+<div class="index" ng-controller="SessionCtrl">
+  <div class="split-pane fixed-left">
+    <div class="split-pane-component" id="session-pane">
+      <div class="toolbar">
+        <h2>Sessions</h2>
+        <input type="text" placeholder="Filter" size="40" />
+        <a ng-click="" class="command" title="Settings"><i class="fa fa-gear"></i></a>
+        <a ng-click="clearSessions()" class="command" title="Clear all sessions"><i class="fa fa-times"></i></a>
+      </div>
+      <div class="grid sessions view" ng-grid="gridOptions">
+      </div>
+    </div>
+		<div class="split-pane-divider" id="vertical-divider"></div>
+    <div class="inspector split-pane-component" id="inspector-pane">
+      <% include '_request.ect' %>
+      <% include '_response.ect' %>
+    <div>
+  </div>
+</div>

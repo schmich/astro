@@ -1,0 +1,21 @@
+<div class="request" ng-controller="RequestCtrl">
+  <div class="toolbar">
+    <h2>Request</h2>
+    <nav>
+      <a href="" ng-class="{ 'selected': view=='summary' }" ng-click="setView('summary')">Summary</a>
+      <a href="" ng-class="{ 'selected': view=='headers' }" ng-click="setView('headers')">Headers</a>
+      <a href="" ng-class="{ 'selected': view=='raw' }" ng-click="setView('raw')">Raw</a>
+    </nav>
+    <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-share"></i></a>
+  </div>
+  <div class="view">
+    <div ng-if="view == 'summary'">
+      {{request.method}} {{request.url}}
+    </div>
+    <div ng-if="view == 'raw'">
+      <pre>{{request.raw}}</pre>
+    </div>
+    <div ng-if="view == 'headers'" class="grid request-headers" ng-grid="gridOptions">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{
+  "name": "astro",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js start",
+    "test": "node test/test.js"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "astro": "main.js"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/schmich/astro.git"
+  },
+  "keywords": [
+    "http",
+    "proxy",
+    "diagnostics"
+  ],
+  "bugs": {
+    "url": "https://github.com/schmich/astro/issues"
+  },
+  "author": {
+    "name": "Chris Schmich",
+    "email": "schmch@gmail.com",
+    "url": "https://github.com/schmich"
+  },
+  "homepage": "https://github.com/schmich/astro",
+  "contributors": [],
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

@@ -1,0 +1,168 @@
+* {
+  box-sizing: border-box;
+}
+body, html {
+  height: 100%;
+}
+h1, h2, h3, h4, pre {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+body {
+  font: 13px Arial;
+  padding: 0;
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+}
+.index {
+  height: 100%;
+}
+.sessions {
+  height: 100%;
+}
+.grid {
+  border: 1px solid rgb(212,212,212);
+  height: 100%;
+}
+.grid .selected {
+  background: #5bf;
+}
+.inspector {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 45%;
+  height: 100%;
+  background: white;
+  overflow: auto;
+}
+.request, .response {
+  height: 100%;
+  position: relative;
+}
+.inspector .request, .inspector .response {
+  height: 50%;
+  overflow: hidden;
+}
+.toolbar {
+  background: #ddd;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.view {
+  padding-top: 39px;
+  height: 100%;
+}
+.toolbar nav {
+  display: inline-block;
+  vertical-align: top;
+  height: 40px;
+}
+.toolbar nav a {
+  font-size: 14px;
+  color: #333;
+  height: 100%;
+  padding: 0 15px;
+  display: inline-block;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.toolbar nav a:hover, .toolbar nav a.selected {
+  background: #5bf;
+  color: #000;
+}
+.toolbar h2 {
+  line-height: 40px;
+  padding: 0 9px 0 9px;
+  font-size: 14px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: normal;
+  color: #333;
+}
+.toolbar .command {
+  line-height: 40px;
+  float: right;
+  padding-right: 20px;
+  font-size: 18px;
+  color: #777;
+  text-decoration: none;
+  cursor: pointer;
+}
+.toolbar .command:hover {
+  color: #000;
+}
+.request pre, .response pre {
+  font-family: Monaco, Consolas, monospace;
+  overflow: auto;
+}
+.response iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.request-headers, .response-headers {
+  width: 100%;
+  height: 100%;
+}
+.grid.request-headers, .grid.response-headers {
+  border: 0;
+}
+.request-load {
+  height: 100%;
+}
+.split-pane {
+  height: 100%;
+}
+#session-pane {
+  right: 50%;
+}
+#inspector-pane {
+  left: 50%;
+}
+#vertical-divider {
+  left: 50%;
+  width: 3px;
+  background: transparent;
+  border-left: 1px solid #ccc;
+  padding: 5px;
+  position: relative;
+}
+.grid .error {
+  //color: red;
+  //border-left: 3px solid red;
+  background: #faa;
+}
+.grid .success {
+  //color: #6b6;
+  //border-left: 3px solid #6d6;
+  background: #afa;
+}
+.grid .redirect {
+  //color: #aaa;
+  //border-left: 3px solid #ccc;
+  background: #ddd;
+}
+.grid .size {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.grid .fill {
+  position: absolute;
+  top: 0px;
+  //background: #aaf;
+  background: #ccc;
+  height: 25px;
+}
+.grid .size .ngCellText {
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,44 @@
+- Concept of "profiles"
+  - Can save filters, column settings, breakpoints, etc.
+  - Load/save profiles
+- Homepage: watermark when no requests are present (help troubleshoot possible issues)
+- Session list: delete key should selectively remove sessions (DELETE /transactions/:id)
+- Configuration dialog
+  - Remove caching headers from requests
+- Filter box to allow filtering of sessions
+- Response summary: show what HTTP status code means (e.g. 200 -> OK, 404 -> Not Found, ...)
+  - See https://github.com/joyent/node/blob/master/lib/_http_server.js
+  - http.STATUS_CODES
+- Request/response summaries: show timings/delta
+- Old-Atlas-style timeline view with timespan bars
+- Store column widths, default tabs, window config, etc. in LocalStorage to persist across reloads
+- Delete cached response data folder on exit
+- "Clear All Sessions" button
+- Pause/resume collection
+- Allow configuration of session columns
+  - Ability to specify a header (e.g. 'Cache-Control')
+- Multi-session select
+  - Opens up statistics-like view: min/max/avg bytes, time
+  - Aggregate stats for content-types, etc.
+- Killing server should reset/notify dashboard webpage
+- Astro API
+  - Command-line tool
+  - JSON API
+  - As includable JS library
+- Log/show proxy request errors (e.g. getaddrinfo ENOTFOUND)
+- Filters
+  - By status code class
+    - Info (1xx), Success (2xx), Error (Client 4xx/Server 5xx, both), Redirect/other 3xx
+  - By size
+  - By content-type or content class (e.g. image, code, ...)
+  - By referer or not
+- Content-Type-specific editor?
+  - e.g. use photo editor for images, text editor for source, etc.
+- Tree-like view based on Referer header
+- Hide "edit" button on 304/no content?
+- Vim-style keybindings for navigation
+  - j/k to move session selection up/down
+  - Spacebar to center on currently selected session
+- Support for other HTTP access modes (Ruby, apps, etc.)
+  - http_proxy=http://localhost:8080 irb
+  - client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
