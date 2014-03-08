@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var proxy = require('../proxy/server');
 var web = require('../web/server');
 var settings = require('../proxy/settings');
@@ -9,16 +10,15 @@ function AstroControl() {
 
 AstroControl.prototype.start = function() {
   var proxyPort = 8080;
-  proxy.server.listen(proxyPort, function() {
-    log('Proxy listening on port ' + proxyPort + '.');
-  });
-
   var webPort = 3000;
-  web.listen(webPort, function() {
-    log('App listening on port ' + webPort + '.');
-  });
 
-  settings.enable(function() {
+  Promise.join(proxy.server.listenAsync(proxyPort), web.listenAsync(webPort)).then(function() {
+    log('Proxy listening on port ' + proxyPort + '.');
+    log('App listening on port ' + webPort + '.');
+    log('Enabling system proxy.');
+  }).then(function() {
+    return settings.enable();
+  }).then(function() {
     log('System proxy enabled.');
 
     process.on('exit', function() {

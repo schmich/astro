@@ -18,7 +18,8 @@
     "faye": "~1.0.1",
     "nomnom": "~1.6.2",
     "open": "0.0.4",
-    "sudo": "~1.0.3"
+    "sudo": "~1.0.3",
+    "bluebird": "~1.1.0"
   },
   "devDependencies": {},
   "repository": {

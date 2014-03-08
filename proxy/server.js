@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var fs = require('fs');
 var net = require('net');
 var http = require('http');
@@ -6,6 +7,7 @@ var url = require('url');
 var childProcess = require('child_process');
 var EventEmitter = require('events').EventEmitter;
 var events = new EventEmitter();
+Promise.promisifyAll(http.Server.prototype);
 
 var agent = new http.Agent({ maxSockets: Infinity });
 

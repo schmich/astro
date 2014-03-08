@@ -1,21 +1,25 @@
+var Promise = require('bluebird');
 var sudo = require('sudo');
 var colors = require('colors');
 var message = require('../common/log').message;
 
-function run(cmd, callback) {
-  // TODO: Check result code.
-  var child = sudo(cmd, { prompt: message('Password (sudo): ') } );
-  child.on('exit', callback || (function() { }));
+function run(cmd) {
+  return new Promise(function(resolve, reject) {
+    var child = sudo(cmd, { prompt: message('Password (sudo): ') });
+    child.on('exit', resolve);
+  });
 }
 
-module.exports.enable = function(callback) {
+module.exports.enable = function() {
   // networksetup -getproxybypassdomains "Wi-Fi"
 
-  run(['networksetup', '-setproxybypassdomains', 'Wi-Fi', 'astro'], function() {
-    run(['networksetup', '-setwebproxy', 'Wi-Fi', 'localhost', '8080', 'off'], function() {
-      run(['networksetup', '-setwebproxystate', 'Wi-Fi', 'on'], callback);
+  return run(['networksetup', '-setproxybypassdomains', 'Wi-Fi', 'astro'])
+    .then(function() {
+      return run(['networksetup', '-setwebproxy', 'Wi-Fi', 'localhost', '8080', 'off']);
+    }).then(function() {
+      return run(['networksetup', '-setwebproxystate', 'Wi-Fi', 'on']);
     });
-  });
+
   //networksetup -setsecurewebproxy "Wi-Fi" localhost 8080 off
   //networksetup -setsecurewebproxystate "Wi-Fi" on
 
@@ -24,7 +28,7 @@ module.exports.enable = function(callback) {
   //fi
 };
 
-module.exports.disable = function(callback) {
-  run(['networksetup', '-setwebproxystate', 'Wi-Fi', 'off'], callback);
+module.exports.disable = function() {
+  return run(['networksetup', '-setwebproxystate', 'Wi-Fi', 'off']);
   // networksetup -setsecurewebproxystate "Wi-Fi" off
 };

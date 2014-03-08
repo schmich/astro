@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var fs = require('fs');
 var http = require('http');
 var url = require('url');
@@ -12,6 +13,7 @@ var streaming = new faye.NodeAdapter({ mount: '/stream', timeout: 45 });
 var proxy = require('../proxy/server');
 var sessions = proxy.sessions;
 var events = proxy.events;
+Promise.promisifyAll(http.Server.prototype);
 
 var app = express();
 
