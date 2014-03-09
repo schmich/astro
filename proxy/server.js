@@ -5,6 +5,7 @@ var http = require('http');
 var https = require('https');
 var url = require('url');
 var childProcess = require('child_process');
+var Store = require('./store');
 var EventEmitter = require('events').EventEmitter;
 var events = new EventEmitter();
 Promise.promisifyAll(http.Server.prototype);
@@ -12,6 +13,8 @@ Promise.promisifyAll(http.Server.prototype);
 var agent = new http.Agent({ maxSockets: Infinity });
 
 var sessions = [];
+
+var store = new Store();
 
 var proxyServer = http.createServer(function(clientRequest, clientResponse) {
   var options = url.parse(clientRequest.url);
@@ -47,20 +50,21 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
     }
 
     clientResponse.writeHead(proxyResponse.statusCode, proxyResponse.headers);
-    proxyResponse.pipe(clientResponse);
 
-    var writer = fs.createWriteStream('data/' + session.id);
-    proxyResponse.pipe(writer);
+    store.createWriteStream(session.id.toString()).then(function(writer) {
+      proxyResponse.pipe(clientResponse);
+      proxyResponse.pipe(writer);
 
-    var size = 0;
-    proxyResponse.on('data', function(chunk) {
-      size += chunk.length;
-    });
+      var size = 0;
+      proxyResponse.on('data', function(chunk) {
+        size += chunk.length;
+      });
 
-    proxyResponse.on('end', function() {
-      session.response.timestamp = Date.now();
-      session.response.size = size;
-      events.emit('session:end', session);
+      proxyResponse.on('end', function() {
+        session.response.timestamp = Date.now();
+        session.response.size = size;
+        events.emit('session:end', session);
+      });
     });
   });
 
@@ -102,6 +106,9 @@ httpsProxyServer.listen(httpsProxyPort, function() {
   console.log("Secure proxy listening on " + httpsProxyPort + "...");
 });*/
 
-module.exports.events = events;
-module.exports.server = proxyServer;
-module.exports.sessions = sessions;
+module.exports = {
+  events: events,
+  server: proxyServer,
+  sessions: sessions,
+  store: store
+};

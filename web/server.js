@@ -13,6 +13,7 @@ var streaming = new faye.NodeAdapter({ mount: '/stream', timeout: 45 });
 var proxy = require('../proxy/server');
 var sessions = proxy.sessions;
 var events = proxy.events;
+var store = proxy.store;
 Promise.promisifyAll(http.Server.prototype);
 
 var app = express();
@@ -45,19 +46,20 @@ app.get('/content/:id', function(req, res) {
   var session = sessions[req.params.id];
   var type = session.response.headers['content-type'];
 
-  var read = fs.createReadStream('data/' + session.id);
-  if (session.response.headers['content-encoding'] == 'gzip') {
-    var gunzip = new zlib.createGunzip();
-    read = read.pipe(gunzip);
-  }
+  store.createReadStream(session.id.toString()).then(function(read) {
+    if (session.response.headers['content-encoding'] == 'gzip') {
+      var gunzip = new zlib.createGunzip();
+      read = read.pipe(gunzip);
+    }
 
-  if (/image\//i.test(type)) {
-    res.set('content-type', type);
-  } else {
-    res.set('content-type', 'text/plain');
-  }
+    if (/image\//i.test(type)) {
+      res.set('content-type', type);
+    } else {
+      res.set('content-type', 'text/plain');
+    }
 
-  read.pipe(res);
+    read.pipe(res);
+  });
 });
 
 app.get('/sessions', function(req, res) {
@@ -108,21 +110,23 @@ app.post('/edit/:id', function(req, res) {
   var editor = process.env.EDITOR;
 
   // TODO: Use original request URL for filename (but ensure uniqueness with ID, too).
-  var read = fs.createReadStream('data/' + session.id);
-  var fileName = path.join(__dirname, 'data', session.id + guessExtension(session));
-  var write = fs.createWriteStream(fileName);
 
-  if (session.response.headers['content-encoding'] == 'gzip') {
-    var gunzip = new zlib.createGunzip();
-    read = read.pipe(gunzip)
-  }
+  var makeRead = store.createReadStream(session.id.toString());
+  var makeWrite = store.createWriteStream(session.id.toString() + guessExtension(session));
 
-  read.pipe(write);
-  read.on('end', function() {
-    childProcess.spawn(editor, [fileName]);
+  Promise.join(makeRead, makeWrite).spread(function(read, write) {
+    if (session.response.headers['content-encoding'] == 'gzip') {
+      var gunzip = new zlib.createGunzip();
+      read = read.pipe(gunzip)
+    }
+
+    read.pipe(write);
+    read.on('end', function() {
+      childProcess.spawn(editor, [fileName]);
+    });
+
+    res.send({});
   });
-
-  res.send({});
 });
 
 var appServer = http.createServer(app);
