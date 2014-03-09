@@ -26,6 +26,7 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
   // delete clientRequest.headers['if-none-match'];
   // clientRequest.headers['cache-control'] = 'max-age=0, no-cache';
 
+  // TODO: Fix session ID assignment when resetting sessions and async session update is possible.
   var session = {
     id: sessions.length,
     request: {
@@ -37,7 +38,7 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
   };
 
   sessions.push(session);
-  events.emit('session:start', session);
+  events.emit('session:request', session);
 
   var proxyRequest = http.request(options);
 
@@ -63,7 +64,7 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
       proxyResponse.on('end', function() {
         session.response.timestamp = Date.now();
         session.response.size = size;
-        events.emit('session:end', session);
+        events.emit('session:response', session);
       });
     });
   });
@@ -75,6 +76,7 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
   });
 });
 
+/*
 proxyServer.on('connect', function(request, socket, head) {
   console.log('Received HTTP CONNECT');
   var server = net.connect(8081, 'localhost', function() {
@@ -84,6 +86,7 @@ proxyServer.on('connect', function(request, socket, head) {
     socket.pipe(server);
   });
 });
+*/
 
 /*var proxyPort = 8080;
 proxyServer.listen(proxyPort, function() {

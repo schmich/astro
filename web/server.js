@@ -33,11 +33,11 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-events.on('session:start', function(session) {
+events.on('session:request', function(session) {
   streaming.getClient().publish('/sessions', session);
 });
 
-events.on('session:end', function(session) {
+events.on('session:response', function(session) {
   streaming.getClient().publish('/sessions', session);
 });
 
