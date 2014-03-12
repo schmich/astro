@@ -43,6 +43,7 @@ events.on('session:response', function(session) {
 
 app.get('/content/:id', function(req, res) {
   // TODO: Headers might be null.
+  // TODO: Response might be null (still in flight).
   var session = sessions[req.params.id];
   var type = session.response.headers['content-type'];
 
@@ -122,7 +123,7 @@ app.post('/edit/:id', function(req, res) {
 
     read.pipe(write);
     read.on('end', function() {
-      childProcess.spawn(editor, [fileName]);
+      childProcess.spawn(editor, [write.path]);
     });
 
     res.send({});
