@@ -60,6 +60,12 @@ ul {
   padding-top: 39px;
   height: 100%;
 }
+.request .view .summary pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: 8px;
+}
 .toolbar nav {
   display: inline-block;
   vertical-align: top;

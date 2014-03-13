@@ -9,8 +9,8 @@
     <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-share"></i></a>
   </div>
   <div class="view">
-    <div ng-if="view == 'summary'">
-      {{request.method}} {{request.url}}
+    <div class="summary" ng-if="view == 'summary'">
+      <pre>{{request.method}} {{request.url}}</pre>
     </div>
     <div ng-if="view == 'raw'">
       <pre>{{request.raw}}</pre>

@@ -21,7 +21,7 @@
   - Opens up statistics-like view: min/max/avg bytes, time
   - Aggregate stats for content-types, etc.
 - Killing server should reset/notify dashboard webpage
-- Astro API
+- Tango API
   - Command-line tool
   - JSON API
   - As includable JS library
@@ -42,3 +42,9 @@
 - Support for other HTTP access modes (Ruby, apps, etc.)
   - http_proxy=http://localhost:8080 irb
   - client.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+- Request
+  - Summary
+    - Show timings/duration
+    - GET http://...
+    - URL parts (protocol, host, port, user/pass, path, query, fragment)
+    - Add Copy button to copy request URL
