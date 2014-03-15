@@ -108,6 +108,9 @@ function guessExtension(session) {
 app.post('/edit/:id', function(req, res) {
   // TODO: Better error handling.
   var session = sessions[req.params.id];
+
+  // TODO: Instead of EDITOR, use "open"/"start" to use the
+  // default editor associated with the file type?
   var editor = process.env.EDITOR;
 
   // TODO: Use original request URL for filename (but ensure uniqueness with ID, too).

@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 
 var parser = require('nomnom');
-var astro = require('./common/control');
+var Control = require('./common/control').Control;
 var spawn = require('child_process').spawn;
 
 parser
   .command('start')
   .callback(function() {
-    var control = new astro.AstroControl();
+    var control = new Control();
     control.start();
   });
 
 parser
   .command('stop')
   .callback(function() {
-    var control = new astro.AstroControl();
+    var control = new Control();
     control.stop();
   });
 
@@ -26,7 +26,7 @@ parser
     var args = opts._.splice(1);
     var command = args.shift();
 
-    // TODO: Get URL/port from astro settings.
+    // TODO: Get URL/port from settings.
     var env = process.env;
     env.http_proxy = 'http://localhost:8080';
 
@@ -35,6 +35,13 @@ parser
     child.on('close', function(code) {
       process.exit(code);
     });
+  });
+
+parser
+  .command('watch')
+  .callback(function() {
+    var control = new Control();
+    control.watch(); 
   });
 
 parser.parse();
