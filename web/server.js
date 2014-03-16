@@ -41,6 +41,10 @@ events.on('session:response', function(session) {
   streaming.getClient().publish('/sessions', session);
 });
 
+events.on('session:error', function(session) {
+  streaming.getClient().publish('/sessions', session);
+});
+
 app.get('/content/:id', function(req, res) {
   // TODO: Headers might be null.
   // TODO: Response might be null (still in flight).

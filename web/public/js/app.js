@@ -28,7 +28,7 @@ app.controller('SessionCtrl', function($scope, $http) {
     },
     columnDefs: [
       { displayName: '#', field: 'id', width: 40, minWidth: 40 },
-      { displayName: 'Status', field: 'response.status', width: 50, cellTemplate: '<div ng-class="{ error: row.getProperty(col.field) >= 400, success: row.getProperty(col.field) >= 200 && row.getProperty(col.field) < 300, redirect: row.getProperty(col.field) >= 300 && row.getProperty(col.field) < 400 }"><div class="ngCellText">{{row.getProperty(col.field)}}</div></div>' },
+      { displayName: 'Status', field: 'response.status', width: 50, cellTemplate: '<div ng-class="{ error: (row.getProperty(col.field) >= 400) || row.getProperty(\'error\'), success: row.getProperty(col.field) >= 200 && row.getProperty(col.field) < 300, redirect: row.getProperty(col.field) >= 300 && row.getProperty(col.field) < 400 }"><div class="ngCellText">{{row.getProperty(\'error\') ? "ERR" : row.getProperty(col.field)}}</div></div>' },
       { displayName: 'Method', field: 'request.method', width: 60 },
       { displayName: 'Host', field: 'request.urlParts.host', width: 150 },
       { displayName: 'Path', field: 'request.urlParts.path' },

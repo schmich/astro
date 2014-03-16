@@ -70,9 +70,11 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
   });
 
   proxyRequest.on('error', function(err) {
-    console.log('Error for ' + clientRequest.url + ': ' + err);
     clientResponse.writeHead(502);
     clientResponse.end();
+
+    session.error = err;
+    events.emit('session:error', session);
   });
 });
 

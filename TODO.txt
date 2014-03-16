@@ -48,5 +48,5 @@
     - GET http://...
     - URL parts (protocol, host, port, user/pass, path, query, fragment)
     - Add Copy button to copy request URL
-- Reflect request errors in UI (e.g. ENOTFOUND)
-  - Should be published through stream
+- Connection-level errors should be present in other parts of the UI (e.g. ENOTFOUND)
+  - Show error info in response pane

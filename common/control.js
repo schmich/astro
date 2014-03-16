@@ -49,11 +49,17 @@ Control.prototype.watch = function() {
   proxy.server.listenAsync(proxyPort).then(function() {
     log('Proxy listening on port ' + proxyPort + '.');
     log('Enabling system proxy.');
+
     proxy.events.on('session:request', function(session) {
-      console.log('<< '.grey + session.request.method + ' ' + session.request.url);
+      console.log('<<< '.grey + session.request.method + ' ' + session.request.url);
     });
+
     proxy.events.on('session:response', function(session) {
-      console.log('>> '.green + session.response.status + ' ' + session.request.url);
+      console.log('>>> '.green + session.response.status + ' ' + session.request.url);
+    });
+
+    proxy.events.on('session:error', function(session) {
+      console.log('ERR '.red + session.error + ' ' + session.request.url);
     });
   }).then(function() {
     return settings.enable();
