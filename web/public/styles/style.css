@@ -142,18 +142,12 @@ ul {
   position: relative;
 }
 .grid .error {
-  //color: red;
-  //border-left: 3px solid red;
   background: #faa;
 }
 .grid .success {
-  //color: #6b6;
-  //border-left: 3px solid #6d6;
   background: #afa;
 }
 .grid .redirect {
-  //color: #aaa;
-  //border-left: 3px solid #ccc;
   background: #ddd;
 }
 .grid .size {
@@ -164,7 +158,6 @@ ul {
 .grid .fill {
   position: absolute;
   top: 0px;
-  //background: #aaf;
   background: #ccc;
   height: 25px;
 }

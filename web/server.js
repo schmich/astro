@@ -20,8 +20,7 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ect');
-//app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
-app.use(express.logger('dev'));
+app.use(express.favicon(__dirname + '/public/img/favicon.ico'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
