@@ -57,7 +57,7 @@ ul {
   width: 100%;
 }
 .view {
-  padding-top: 39px;
+  padding-top: 34px;
   height: 100%;
 }
 .request .view .summary pre {
@@ -69,15 +69,16 @@ ul {
 .toolbar nav {
   display: inline-block;
   vertical-align: top;
-  height: 40px;
+  height: 35px;
 }
 .toolbar nav a {
   font-size: 14px;
   color: #333;
   height: 100%;
-  padding: 0 15px;
+  padding: 0 10px;
+  margin: 0 5px;
   display: inline-block;
-  line-height: 40px;
+  line-height: 35px;
   vertical-align: middle;
 }
 .toolbar nav a:hover, .toolbar nav a.selected {
@@ -85,7 +86,7 @@ ul {
   color: #000;
 }
 .toolbar h2 {
-  line-height: 40px;
+  line-height: 35px;
   padding: 0 9px 0 9px;
   font-size: 14px;
   text-transform: uppercase;
@@ -94,7 +95,7 @@ ul {
   color: #333;
 }
 .toolbar .command {
-  line-height: 40px;
+  line-height: 35px;
   float: right;
   padding-right: 20px;
   font-size: 18px;
