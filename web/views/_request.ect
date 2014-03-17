@@ -7,15 +7,13 @@
       <a href="" ng-class="{ 'selected': view=='raw' }" ng-click="setView('raw')">Raw</a>
     </nav>
     <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request details in a separate tab"><i class="fa fa-share"></i></a>
-    <a ng-if="activeSession && request.method=='GET'" ng-href="{{request.url}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-folder-o"></i></a>
+    <a ng-if="activeSession && request.method == 'GET'" ng-href="{{request.url}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-folder-o"></i></a>
   </div>
   <div class="view" ng-if="request">
     <div class="summary" ng-if="view == 'summary'">
       <pre>{{request.method}} {{request.url}}</pre>
     </div>
-    <div ng-if="view == 'raw'">
-      <pre>{{request.raw}}</pre>
-    </div>
+    <iframe ng-if="view == 'raw'" ng-src="{{contentUrl}}"></iframe>
     <div ng-if="view == 'headers'" class="grid request-headers" ng-grid="gridOptions">
     </div>
   </div>

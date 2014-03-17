@@ -44,13 +44,13 @@ events.on('session:error', function(session) {
   streaming.getClient().publish('/sessions', session);
 });
 
-app.get('/content/:id', function(req, res) {
+app.get('/response/:id/content', function(req, res) {
   // TODO: Headers might be null.
   // TODO: Response might be null (still in flight).
   var session = sessions[req.params.id];
   var type = session.response.headers['content-type'];
 
-  store.createReadStream(session.id.toString()).then(function(read) {
+  store.createReadStream('response', session.id).then(function(read) {
     if (session.response.headers['content-encoding'] == 'gzip') {
       var gunzip = new zlib.createGunzip();
       read = read.pipe(gunzip);
@@ -62,6 +62,13 @@ app.get('/content/:id', function(req, res) {
       res.set('content-type', 'text/plain');
     }
 
+    read.pipe(res);
+  });
+});
+
+app.get('/request/:id/content', function(req, res) {
+  var session = sessions[req.params.id];
+  store.createReadStream('request', session.id).then(function(read) {
     read.pipe(res);
   });
 });
@@ -108,6 +115,7 @@ function guessExtension(session) {
   return "";
 }
 
+// TODO: edit -> open
 app.post('/edit/:id', function(req, res) {
   // TODO: Better error handling.
   var session = sessions[req.params.id];
@@ -118,8 +126,8 @@ app.post('/edit/:id', function(req, res) {
 
   // TODO: Use original request URL for filename (but ensure uniqueness with ID, too).
 
-  var makeRead = store.createReadStream(session.id.toString());
-  var makeWrite = store.createWriteStream(session.id.toString() + guessExtension(session));
+  var makeRead = store.createReadStream('response', session.id);
+  var makeWrite = store.createWriteStream('edit', session.id.toString() + guessExtension(session));
 
   Promise.join(makeRead, makeWrite).spread(function(read, write) {
     if (session.response.headers['content-encoding'] == 'gzip') {

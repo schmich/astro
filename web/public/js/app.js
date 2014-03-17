@@ -123,7 +123,7 @@ function headerCase(name) {
   });
 }
 
-app.controller('RequestCtrl', function($scope, $http) {
+app.controller('RequestCtrl', function($scope, $http, $sce) {
   $scope.view = 'summary';
 
   $scope.setView = function(view) {
@@ -131,6 +131,11 @@ app.controller('RequestCtrl', function($scope, $http) {
   };
 
   $scope.headers = [];
+
+  $scope.contentUrl = null;
+  $scope.$watch('activeSession', function(session) {
+    $scope.contentUrl = $sce.trustAsResourceUrl('/request/' + session.id + '/content');
+  });
 
   $scope.$watch('request', function(request) {
     $scope.headers = [];
@@ -164,7 +169,7 @@ app.controller('ResponseCtrl', function($scope, $http, $sce) {
 
   $scope.contentUrl = null;
   $scope.$watch('activeSession', function(session) {
-    $scope.contentUrl = $sce.trustAsResourceUrl('/content/' + session.id);
+    $scope.contentUrl = $sce.trustAsResourceUrl('/response/' + session.id + '/content');
   });
 
   $scope.headers = [];

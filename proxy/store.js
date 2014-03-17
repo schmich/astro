@@ -39,21 +39,31 @@ function Store() {
   this.storeDir = createStoreDir('astro');
 }
 
-Store.prototype.createWriteStream = function(fileName) {
+Store.prototype.createWriteStream = function(/* path arguments */) {
   var self = this;
+  var args = Array.prototype.slice.call(arguments);
+
   return new Promise(function(resolve, reject) {
     self.storeDir.then(function(dir) {
-      var stream = fs.createWriteStream(path.join(dir, fileName));
+      // TODO: Files should be in directories rather than joined by '-'.
+      // TODO: See https://github.com/substack/node-mkdirp
+      var fileName = path.join(dir, args.map(function(x) { return x.toString(); }).join('-'));
+      var stream = fs.createWriteStream(fileName);
       resolve(stream);
     });
   });
 };
 
-Store.prototype.createReadStream = function(fileName) {
+Store.prototype.createReadStream = function(/* path arguments */) {
   var self = this;
+  var args = Array.prototype.slice.call(arguments);
+
   return new Promise(function(resolve, reject) {
     self.storeDir.then(function(dir) {
-      var stream = fs.createReadStream(path.join(dir, fileName));
+      // TODO: Files should be in directories rather than joined by '-'.
+      // TODO: See https://github.com/substack/node-mkdirp
+      var fileName = path.join(dir, args.map(function(x) { return x.toString(); }).join('-'));
+      var stream = fs.createReadStream(fileName);
       resolve(stream);
     });
   });

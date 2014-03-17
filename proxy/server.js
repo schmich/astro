@@ -42,17 +42,21 @@ var proxyServer = http.createServer(function(clientRequest, clientResponse) {
 
   var proxyRequest = http.request(options);
 
-  clientRequest.pipe(proxyRequest);
+  // TODO: Optimization: avoid creating request file cache if request body is empty.
+  store.createWriteStream('request', session.id).then(function(writer) {
+    clientRequest.pipe(proxyRequest);
+    clientRequest.pipe(writer);
+  });
 
   proxyRequest.on('response', function(proxyResponse) {
     session.response = {
       status: proxyResponse.statusCode,
       headers: proxyResponse.headers
-    }
+    };
 
     clientResponse.writeHead(proxyResponse.statusCode, proxyResponse.headers);
 
-    store.createWriteStream(session.id.toString()).then(function(writer) {
+    store.createWriteStream('response', session.id).then(function(writer) {
       proxyResponse.pipe(clientResponse);
       proxyResponse.pipe(writer);
 

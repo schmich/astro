@@ -50,5 +50,7 @@
     - Add Copy button to copy request URL
 - Connection-level errors should be present in other parts of the UI (e.g. ENOTFOUND)
   - Show error info in response pane
-- Disabling system proxy after long-running session probably doesn't work
+- Disabling system proxy after a long-running session doesn't work
+  - sudo credentials expire, Node cannot prompt for sudo password since it's shutting down (running last tick)
   - Need to ensure sudo password is getting through to process
+- Delete cache/store folder on exit
