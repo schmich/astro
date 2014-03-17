@@ -128,10 +128,16 @@ app.controller('RequestCtrl', function($scope, $http, $sce) {
 
   $scope.contentUrl = null;
   $scope.$watch('activeSession', function(session) {
+    if (!session)
+      return;
+
     $scope.contentUrl = $sce.trustAsResourceUrl('/request/' + session.id + '/content');
   });
 
   $scope.$watch('request', function(request) {
+    if (!request)
+      return;
+
     $scope.headers = [];
     for (var key in request.headers) {
       $scope.headers.push({
@@ -157,6 +163,9 @@ app.controller('RequestCtrl', function($scope, $http, $sce) {
 app.controller('ResponseCtrl', function($scope, $http, $sce) {
   $scope.contentUrl = null;
   $scope.$watch('activeSession', function(session) {
+    if (!session)
+      return;
+
     $scope.contentUrl = $sce.trustAsResourceUrl('/response/' + session.id + '/content');
   });
 
@@ -173,6 +182,9 @@ app.controller('ResponseCtrl', function($scope, $http, $sce) {
   };
 
   $scope.$watch('response', function(response) {
+    if (!response)
+      return;
+
     $scope.headers = [];
     for (var key in response.headers) {
       $scope.headers.push({
