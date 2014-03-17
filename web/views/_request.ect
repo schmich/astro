@@ -6,7 +6,8 @@
       <a href="" ng-class="{ 'selected': view=='headers' }" ng-click="setView('headers')">Headers</a>
       <a href="" ng-class="{ 'selected': view=='raw' }" ng-click="setView('raw')">Raw</a>
     </nav>
-    <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-share"></i></a>
+    <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request details in a separate tab"><i class="fa fa-share"></i></a>
+    <a ng-if="activeSession && request.method=='GET'" ng-href="{{request.url}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-folder-o"></i></a>
   </div>
   <div class="view" ng-if="request">
     <div class="summary" ng-if="view == 'summary'">
