@@ -124,7 +124,7 @@ function headerCase(name) {
 }
 
 app.controller('RequestCtrl', function($scope, $http) {
-  $scope.view = 'headers';
+  $scope.view = 'summary';
 
   $scope.setView = function(view) {
     $scope.view = view;
@@ -156,7 +156,7 @@ app.controller('RequestCtrl', function($scope, $http) {
 });
 
 app.controller('ResponseCtrl', function($scope, $http, $sce) {
-  $scope.view = 'headers';
+  $scope.view = 'summary';
 
   $scope.setView = function(view) {
     $scope.view = view;
