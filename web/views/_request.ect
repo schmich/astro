@@ -4,7 +4,7 @@
     <nav ng-if="request">
       <a href="" ng-choice="summary">Summary</a>
       <a href="" ng-choice="headers">Headers</a>
-      <a href="" ng-choice="raw">Raw</a>
+      <a href="" ng-choice="body">Body</a>
     </nav>
     <a ng-if="activeSession" ng-href="/requests/{{activeSession.id}}" class="command" target="_blank" title="Open request details in a separate tab"><i class="fa fa-share"></i></a>
     <a ng-if="activeSession && request.method == 'GET'" ng-href="{{request.url}}" class="command" target="_blank" title="Open request in a separate tab"><i class="fa fa-folder-o"></i></a>
@@ -13,7 +13,7 @@
     <div class="summary" ng-if="choice == 'summary'">
       <pre>{{request.method}} {{request.url}}</pre>
     </div>
-    <iframe ng-if="choice == 'raw'" ng-src="{{contentUrl}}"></iframe>
+    <iframe ng-if="choice == 'body'" ng-src="{{contentUrl}}"></iframe>
     <div ng-if="choice == 'headers'" class="grid request-headers" ng-grid="gridOptions">
     </div>
   </div>
