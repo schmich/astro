@@ -124,12 +124,6 @@ function headerCase(name) {
 }
 
 app.controller('RequestCtrl', function($scope, $http, $sce) {
-  $scope.view = 'summary';
-
-  $scope.setView = function(view) {
-    $scope.view = view;
-  };
-
   $scope.headers = [];
 
   $scope.contentUrl = null;
@@ -161,12 +155,6 @@ app.controller('RequestCtrl', function($scope, $http, $sce) {
 });
 
 app.controller('ResponseCtrl', function($scope, $http, $sce) {
-  $scope.view = 'summary';
-
-  $scope.setView = function(view) {
-    $scope.view = view;
-  };
-
   $scope.contentUrl = null;
   $scope.$watch('activeSession', function(session) {
     $scope.contentUrl = $sce.trustAsResourceUrl('/response/' + session.id + '/content');
@@ -226,6 +214,51 @@ app.filter('size', function() {
       return bytes + 'B';
     } else {
       return '0';
+    }
+  };
+});
+
+app.directive('ngChoose', function() {
+  return {
+    restrict: 'A',
+    controller: function($scope) {
+      $scope.choices = {};
+      $scope.choice = null;
+
+      this.addChoice = function(name, elem) {
+        if (!$scope.choice) {
+          $scope.choice = name;
+          elem.addClass('selected');
+        }
+
+        $scope.choices[name] = elem;
+      };
+
+      this.select = function(choiceName) {
+        angular.forEach($scope.choices, function(elem) {
+          elem.removeClass('selected');
+        });
+
+        $scope.choices[choiceName].addClass('selected');
+
+        $scope.$apply(function() {
+          $scope.choice = choiceName;
+        });
+      };
+    }
+  };
+});
+
+app.directive('ngChoice', function() {
+  return {
+    require: '^ngChoose',
+    restrict: 'A',
+    link: function(scope, elem, attr, choiceCtrl) {
+      choiceCtrl.addChoice(attr.ngChoice, elem);
+
+      elem.on('click', function() {
+        choiceCtrl.select(attr.ngChoice);
+      });
     }
   };
 });

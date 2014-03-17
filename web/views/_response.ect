@@ -1,20 +1,20 @@
-<div class="response" ng-controller="ResponseCtrl">
+<div class="response" ng-controller="ResponseCtrl" ng-choose>
   <div class="toolbar">
     <h2>Response</h2>
     <nav ng-if="response">
-      <a href="" ng-class="{ 'selected': view=='summary' }" ng-click="setView('summary')">Summary</a>
-      <a href="" ng-class="{ 'selected': view=='headers' }" ng-click="setView('headers')">Headers</a>
-      <a href="" ng-class="{ 'selected': view=='raw' }" ng-click="setView('raw')">Raw</a>
+      <a href="" ng-choice="summary">Summary</a>
+      <a href="" ng-choice="headers">Headers</a>
+      <a href="" ng-choice="raw">Raw</a>
     </nav>
     <a ng-if="activeSession" ng-href="/responses/{{activeSession.id}}" class="command" target="_blank" title="Open response details in a separate tab"><i class="fa fa-share"></i></a>
     <a ng-if="activeSession" ng-click="edit(activeSession.id)" class="command" title="Open response in an editor"><i class="fa fa-file-text-o"></i></a>
   </div>
   <div class="view" ng-if="response">
-    <div ng-if="view == 'summary'">
+    <div ng-if="choice == 'summary'">
       {{response.status}} {{statusText(response.status)}}
     </div>
-    <iframe ng-if="view == 'raw'" ng-src="{{contentUrl}}"></iframe>
-    <div ng-if="view == 'headers'" class="grid response-headers" ng-grid="gridOptions">
+    <iframe ng-if="choice == 'raw'" ng-src="{{contentUrl}}"></iframe>
+    <div ng-if="choice == 'headers'" class="grid response-headers" ng-grid="gridOptions">
     </div>
   </div>
   <div class="view watermark" ng-if="!response">
