@@ -6,7 +6,7 @@ app.controller('SessionCtrl', function($scope, $http) {
   $scope.request = null;
   $scope.response = null;
 
-  $(document).ready(function () {
+  $(function() {
     $('.split-pane').splitPane();
   });
 
